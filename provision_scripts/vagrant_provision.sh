@@ -21,9 +21,9 @@ sudo ln -s apache-maven-3.5.0 maven
 
 # Let's set some environment variables
 
-echo "export JAVA_HOME=/usr/java/jdk1.8.0_131" >> ~/.bashrc
-echo "export MVN_HOME=/usr/local/maven" >> ~/.bashrc
-echo "export PATH=$PATH:$JAVA_HOME:$MVN_HOME/bin" >> ~/.bashrc
+echo "export JAVA_HOME=/usr/java/jdk1.8.0_131" >> /etc/bashrc
+echo "export MVN_HOME=/usr/local/maven" >> /etc/bashrc
+echo "export PATH=$PATH:$JAVA_HOME:$MVN_HOME/bin" >> /etc/bashrc
 
 # and do it for the first session too
 
@@ -57,26 +57,30 @@ sudo systemctl start postgresql
 
 # Invoke the various SQL commands to set up PGSQL for use by MMS
 
-sudo psql -c "CREATE USER vagrant;" -U postgres
-sudo psql -c "CREATE USER mms WITH PASSWORD 'mmspass';" -U postgres
+sudo psql -U postgres -c "CREATE USER vagrant;"
+sudo psql -U postgres -c "CREATE USER mms WITH PASSWORD 'mmspass';"
 # so we can run mms.sql
-sudo psql -c "CREATE USER root;" -U postgres
+sudo psql -U postgres -c "CREATE USER root;"
 # make db
-sudo psql -c "CREATE DATABASE mms;" -U postgres
+sudo psql -U postgres -c "CREATE DATABASE mms;"
 # grant needed permissions to the MMS user
+
+sudo psql -c "GRANT ALL ON DATABASE mms TO mms;" -U postgres
 sudo psql -c "ALTER USER mms CREATEDB;" -U postgres
 sudo psql -c "ALTER DATABASE mms OWNER TO mms;" -U postgres
-sudo psql -c "GRANT ALL ON DATABASE mms TO mms;" -U postgres
-sudo psql -c "ALTER TABLE organizations OWNER TO mms;" -U postgres -d mms
-sudo psql -c "ALTER TABLE projectmounts OWNER TO mms;" -U postgres -d mms
-sudo psql -c "ALTER TABLE projects OWNER TO mms;" -U postgres -d mms
 
-sudo psql -c "GRANT ALL ON TABLE organizations TO mms;" -U postgres -d mms
-sudo psql -c "GRANT ALL ON TABLE projectmounts TO mms;" -U postgres -d mms
-sudo psql -c "GRANT ALL ON TABLE projects TO mms;" -U postgres -d mms
+#sudo psql -c "GRANT ALL ON TABLE organizations TO mms;" -U postgres -d mms
+#sudo psql -c "GRANT ALL ON TABLE projectmounts TO mms;" -U postgres -d mms
+#sudo psql -c "GRANT ALL ON TABLE projects TO mms;" -U postgres -d mms
 
 # sudo can connect to root role after the user has been made
 sudo psql -d mms -a -f /vagrant/mms/mms-ent/repo-amp/src/main/java/gov/nasa/jpl/view_repo/db/mms.sql
+
+# mms.sql makes tables - these lines hand them over to mms
+
+sudo psql -c "ALTER TABLE organizations OWNER TO mms;" -U postgres -d mms
+sudo psql -c "ALTER TABLE projectmounts OWNER TO mms;" -U postgres -d mms
+sudo psql -c "ALTER TABLE projects OWNER TO mms;" -U postgres -d mms
 
 # Add ActiveMQ
 cd /usr/local

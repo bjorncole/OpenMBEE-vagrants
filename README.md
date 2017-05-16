@@ -13,4 +13,6 @@ Clone repositories as needed as sub-directories to the "mms-file-area." Download
 
 Be sure to add configuration files from MMS and Webapp repositories (for example, creating an "mms.properties" file beside "mms.properties.example").
 
+Once the machine has been provisioned, log in and navigate to /vagrant/mms/mms-ent. Run the "run.sh" script as root user. You may also need to manually re-enter the "export" commands to get the Maven path environment variables into a useful state.
+
 **Be careful in the current configuration - PostgresSQL will be configured to "trust" to make initial connection easier. Apply proper authentication if this is to be exposed to something outside your local desktop.**
