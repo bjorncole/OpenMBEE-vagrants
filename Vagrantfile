@@ -24,11 +24,13 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8080, host: 8080 # alfresco share
   config.vm.network "forwarded_port", guest: 61614, host: 61614 # websocket
   config.vm.network "forwarded_port", guest: 8081, host: 8081 # for Django
+  config.vm.network "forwarded_port", guest: 9000, host: 9000 # for Django
 #  config.vm.network "forwarded_port", guest: 9001, host: 9001 # supervisor
 
 #  config.vm.provision :shell, path: "provision/provision_script"
 
   config.vm.provision "shell", path: "provision_scripts/vagrant_provision.sh"
+  config.vm.provision "shell", path: "provision_scripts/provision_vieweditor.sh"
   config.vm.provision "shell", path: "provision_scripts/services_kick.sh", run: "always"
 
 end
