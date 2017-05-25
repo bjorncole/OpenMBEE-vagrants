@@ -19,17 +19,17 @@ sudo rm apache-maven-3.5.0-bin.tar.gz
 cd /usr/local
 sudo ln -s apache-maven-3.5.0 maven
 
-# Let's set some environment variables
-
-echo "export JAVA_HOME=/usr/java/jdk1.8.0_131" >> /etc/bashrc
-echo "export MVN_HOME=/usr/local/maven" >> /etc/bashrc
-echo "export PATH=$PATH:$JAVA_HOME:$MVN_HOME/bin" >> /etc/bashrc
-
-# and do it for the first session too
+# set environment variables for this session
 
 export JAVA_HOME=/usr/java/jdk1.8.0_131
 export MVN_HOME=/usr/local/maven
 export PATH=$PATH:$JAVA_HOME:$MVN_HOME/bin
+
+# set them in the profile
+
+echo "export JAVA_HOME=/usr/java/jdk1.8.0_131" >> /etc/bashrc
+echo "export MVN_HOME=/usr/local/maven" >> /etc/bashrc
+echo "export PATH=$PATH" >> /etc/bashrc
 
 # Install ElasticSearch from its server and then cleanup
 
@@ -69,10 +69,6 @@ sudo psql -c "GRANT ALL ON DATABASE mms TO mms;" -U postgres
 sudo psql -c "ALTER USER mms CREATEDB;" -U postgres
 sudo psql -c "ALTER DATABASE mms OWNER TO mms;" -U postgres
 
-#sudo psql -c "GRANT ALL ON TABLE organizations TO mms;" -U postgres -d mms
-#sudo psql -c "GRANT ALL ON TABLE projectmounts TO mms;" -U postgres -d mms
-#sudo psql -c "GRANT ALL ON TABLE projects TO mms;" -U postgres -d mms
-
 # sudo can connect to root role after the user has been made
 sudo psql -d mms -a -f /vagrant/mms/mms-ent/repo-amp/src/main/java/gov/nasa/jpl/view_repo/db/mms.sql
 
@@ -81,6 +77,10 @@ sudo psql -d mms -a -f /vagrant/mms/mms-ent/repo-amp/src/main/java/gov/nasa/jpl/
 sudo psql -c "ALTER TABLE organizations OWNER TO mms;" -U postgres -d mms
 sudo psql -c "ALTER TABLE projectmounts OWNER TO mms;" -U postgres -d mms
 sudo psql -c "ALTER TABLE projects OWNER TO mms;" -U postgres -d mms
+
+sudo psql -c "GRANT ALL ON TABLE organizations TO mms;" -U postgres -d mms
+sudo psql -c "GRANT ALL ON TABLE projectmounts TO mms;" -U postgres -d mms
+sudo psql -c "GRANT ALL ON TABLE projects TO mms;" -U postgres -d mms
 
 # Add ActiveMQ
 cd /usr/local
