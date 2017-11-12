@@ -45,7 +45,7 @@ sudo service elasticsearch start
 sudo /vagrant/mms/mms-ent/repo-amp/src/main/java/gov/nasa/jpl/view_repo/db/mms_mappings.sh
 
 # Install Postgres - this seems to get 9.2, might not be compatible
-
+vagran
 sudo yes | yum install postgresql-server postgresql-contrib
 sudo postgresql-setup initdb
 

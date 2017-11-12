@@ -1,0 +1,17 @@
+mode=unattended
+enable-components=javaalfresco,alfrescowcmqs
+
+# Use JDBC settings for an existing database
+jdbc_url=jdbc:postgresql://localhost/alfresco
+jdbc_driver=org.postgresql.Driver
+jdbc_database=alfresco
+jdbc_username=alfresco
+jdbc_password=alfresco
+
+# Install location
+prefix=/opt/alfresco-community
+
+alfresco_admin_password=bj_admin
+
+# Don't install init scripts
+baseunixservice_install_as_service=0

@@ -1,35 +1,25 @@
 #!/bin/bash
 
-cd /tmp
-
-# install Git
-yes | sudo yum install git
-
-# Get Node v4
+# get node
 sudo curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
+sudo yum -y install nodejs
 
-sudo yum install -y gcc-c++ make
-
-# install Node v4
-sudo yum install -y nodejs
-
-# add Grunt
+# get grunt
 sudo npm install -g grunt-cli
 
-# add Bower
+# get bower
 sudo npm install -g bower
 
-# prepare to run custom stuff
+# install git (yeah, this machine is barebones)
+yes | sudo yum install git
+
+# get to the package.json location
 cd /vagrant/EMS-Webapp
+sudo npm install
 
-# bring saved server config file over
+#run final build and start up VE server
+#grunt server:ems
 
-sudo cp /vagrant/non_yum_installer_files/angular-mms-grunt-servers.json /vagrant/EMS-Webapp/angular-mms-grunt-servers.json
-
-# be very careful about settings - need to force
-# symbolic links off b/c npm cleans up after itself pretty aggressively
-
-# this installs need Grunt support to EMS-Webapp directory
-
-npm install --no-bin-links
+sudo grunt --force
+grunt server:ems --force
 
