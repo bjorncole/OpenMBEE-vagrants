@@ -13,8 +13,6 @@ Install VirtualBox and Vagrant.
 
 Clone repositories as needed as sub-directories to the "mms-file-area." Download Java 8 JDK to the "non_yum_installer_files" area because Oracle doesn't allow web-based downloads from scripts. Ditto ActiveMQ. Also get an appropriate JDBC connector for Tomcat: https://jdbc.postgresql.org/download.html
 
-The Vagrantfile has scripts commented out for downloading Git, cloning the MMS repo, and launching Maven to build the MMS. You only have to do this once! But after an hour or so of cranking, you will have a running Alfresco instance with all the source code built in a shared folder. You can then re-comment those scripts and have a much faster rebuild in subsequent tries / resets of your environment.
+There is a Vagrantfile and a Vagrantfile_build. The Vagrantfile_build should go through the steps to acquire Git, download working files, and build the application with Maven. You only have to do this once! But after an hour or so of cranking, you will have a running Alfresco instance with all the source code built in a shared folder. You can use the tryout procedure in the OpenMBEE Github for ways to tell that it is live. You can then use the actual Vagrantfile to provision the built application into standalone Tomcat and Postgres.
 
 Be sure to add configuration files from MMS and Webapp repositories (for example, creating an "mms.properties" file beside "mms.properties.example").
-
-Wait until the MMS is up and running - in a browser navigate to the orgs REST service (in this case, localhost:8080/alfresco/service/orgs to test for activity).
